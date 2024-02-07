@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<p>{{ instructions }}</p>
+<a href="/questions/0"><button>Start Survey</button></a>
+
+{% if session.get('survey_started') or session.get('survey_completed') %}
+<a href="/reset"><button>Reset Survey</button></a>
+{% endif %}
+{% endblock %}

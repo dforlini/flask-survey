@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/answer" method="POST">
+   <fieldset>
+    <legend>{{ question.question }}</legend>
+    {% if question.allow_text %}
+     <input type="text" name="choice" required>
+    {% else %}
+     {% for choice in question.choices %}
+      <div>
+        <input type="radio" id="{{ loop.index }}" name="choice" value="{{ choice}}" required>
+        <label for="{{ loop.index }}">{{ choice }}</label>
+      </div>
+     {% endfor %}
+    {% endif %}   
+   </fieldset>
+   <button type="submit">Submit</button>
+</form>
+{% endblock %}
