@@ -4,13 +4,10 @@
 <h1>Select a Survey</h1>
 <p>Please choose which survey you would like to take:</p>
 
-<form action="{{ url_for('start_survey')}}" method="post">
-  {% for key, survey in surveys.items() %}
-  <div>
-    <input type="radio" id="survey_{{ key }}" name="survey_name" value="{{ key }}">
-    <label for="survey_{{ key }}">{{ survey.title }}</label>
-  </div>
-  {% endfor%}
-  <button type="submit">Start Survey</button>
+{% for key, survey in surveys.items() %}
+<form action="{{ url_for('initialize_survey') }}" method="post">
+  <input type="hidden" name="survey_name" value="{{ key }}">
+  <button type="submit">Start {{ survey.title }}</button>
 </form>
+{% endfor%}
 {% endblock %}

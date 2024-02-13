@@ -10,6 +10,19 @@ debug = DebugToolbarExtension(app)
 
 responses = []
 
+@app.route('/initialize_survey', methods=['POST'])
+def initialize_survey():
+    survey_name = request.form.get('survey_name')
+    
+    if survey_name not in surveys:
+        flash("Invalid survey selected", "error")
+        return redirect(url_for('show_survey_selection'))
+    
+    session['current_survey'] = survey_name
+    session[f'{survey_name}_responses'] = []
+    
+    return redirect(url_for('show_question', survey_name=survey_name, qid=0))
+
 
 @app.route('/')
 def show_survey_selection():
@@ -58,10 +71,6 @@ def show_question(qid):
 @app.route('/answer', methods=['POST'])
 def handle_answer():
    current_survey_key = session.get('current_survey')
-   if not current_survey_key:
-       flash("No survey selected", "error")
-       return redirect(url_for('show_survey_selection'))
-   
    responses_key = f'{current_survey_key}_responses'
    responses = session.get(responses_key, [])
    
